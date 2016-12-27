@@ -149,7 +149,12 @@ public final class JsAstUtils {
 
     @NotNull
     public static JsExpression charToInt(@NotNull JsExpression expression) {
-        return invokeMethod(expression, "charCodeAt", JsNumberLiteral.ZERO);
+        return expression;
+    }
+
+    @NotNull
+    public static JsExpression charToString(@NotNull JsExpression expression) {
+        return new JsInvocation(new JsNameRef("fromCharCode", new JsNameRef("String")), expression);
     }
 
     @NotNull

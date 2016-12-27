@@ -2,6 +2,10 @@ package foo
 
 
 fun box(): String {
+    var q = "O"
+    q += 'K'
+    if (q != "OK") return "fail"
+
     val s = StringBuilder()
     s.append("a")
     s.append("b").append("c")

@@ -111,10 +111,10 @@ Kotlin.compareTo = function (a, b) {
     var typeA = typeof a;
     var typeB = typeof a;
     if (Kotlin.isChar(a) && typeB == "number") {
-        return Kotlin.primitiveCompareTo(a.charCodeAt(0), b);
+        return Kotlin.primitiveCompareTo(a, b);
     }
     if (typeA == "number" && Kotlin.isChar(b)) {
-        return Kotlin.primitiveCompareTo(a, b.charCodeAt(0));
+        return Kotlin.primitiveCompareTo(a, b);
     }
     if (typeA == "number" || typeA == "string") {
         return a < b ? -1 : a > b ? 1 : 0;
@@ -131,7 +131,7 @@ Kotlin.isNumber = function (a) {
 };
 
 Kotlin.isChar = function (value) {
-    return (typeof value) == "string" && value.length == 1;
+    return (typeof value) == "number" && (value & 0xFFFF) == value;
 };
 
 Kotlin.isComparable = function (value) {
@@ -148,23 +148,23 @@ Kotlin.isCharSequence = function (value) {
 };
 
 Kotlin.charInc = function (value) {
-    return String.fromCharCode(value.charCodeAt(0)+1);
+    return Kotlin.toChar(value+1);
 };
 
 Kotlin.charDec = function (value) {
-    return String.fromCharCode(value.charCodeAt(0)-1);
+    return Kotlin.toChar(value-1);
 };
 
 Kotlin.toShort = function (a) {
-    return (a & 0xFFFF) << 16 >> 16;
+    return a << 16 >> 16;
 };
 
 Kotlin.toByte = function (a) {
-    return (a & 0xFF) << 24 >> 24;
+    return a << 24 >> 24;
 };
 
 Kotlin.toChar = function (a) {
-   return String.fromCharCode((((a | 0) % 65536) & 0xFFFF) << 16 >>> 16);
+   return a & 0xFFFF;
 };
 
 Kotlin.numberToLong = function (a) {
@@ -347,7 +347,7 @@ Kotlin.numberArrayOfSize = function (size) {
 
 Kotlin.charArrayOfSize = function (size) {
     return Kotlin.arrayFromFun(size, function () {
-        return '\0';
+        return 0;
     });
 };
 
