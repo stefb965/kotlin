@@ -16,31 +16,25 @@
 
 package org.jetbrains.kotlin.js.translate.operation;
 
-import com.google.dart.compiler.backend.js.ast.*;
+import com.google.dart.compiler.backend.js.ast.JsExpression;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.kotlin.descriptors.CallableDescriptor;
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor;
-import org.jetbrains.kotlin.js.translate.callTranslator.CallTranslator;
+import org.jetbrains.kotlin.js.translate.callTranslator.CallInfo;
+import org.jetbrains.kotlin.js.translate.callTranslator.CallInfoKt;
 import org.jetbrains.kotlin.js.translate.context.TranslationContext;
 import org.jetbrains.kotlin.js.translate.intrinsic.functions.basic.FunctionIntrinsic;
-import org.jetbrains.kotlin.lexer.KtToken;
-import org.jetbrains.kotlin.lexer.KtTokens;
 import org.jetbrains.kotlin.psi.KtUnaryExpression;
 import org.jetbrains.kotlin.resolve.calls.callUtil.CallUtilKt;
 import org.jetbrains.kotlin.resolve.calls.model.ResolvedCall;
 
 import java.util.Collections;
 
-import static org.jetbrains.kotlin.js.translate.utils.PsiUtils.getOperationToken;
-import static org.jetbrains.kotlin.js.translate.utils.PsiUtils.isPrefix;
-
 
 public final class IntrinsicIncrementTranslator extends IncrementTranslator {
     @NotNull
     private final ResolvedCall<? extends FunctionDescriptor> resolvedCall;
 
-    public IntrinsicIncrementTranslator(@NotNull KtUnaryExpression expression,
-                                        @NotNull TranslationContext context) {
+    public IntrinsicIncrementTranslator(@NotNull KtUnaryExpression expression, @NotNull TranslationContext context) {
         super(expression, context);
         this.resolvedCall = CallUtilKt.getFunctionResolvedCallWithAssert(expression, context.bindingContext());
     }
@@ -49,6 +43,7 @@ public final class IntrinsicIncrementTranslator extends IncrementTranslator {
     @NotNull
     protected JsExpression operationExpression(@NotNull JsExpression receiver) {
         FunctionIntrinsic intrinsic = context().intrinsics().getFunctionIntrinsic(resolvedCall.getResultingDescriptor());
-        return intrinsic.apply(receiver, Collections.<JsExpression>emptyList(), context());
+        CallInfo callInfo = CallInfoKt.getCallInfo(context(), resolvedCall, receiver);
+        return intrinsic.apply(callInfo, Collections.<JsExpression>emptyList(), context());
     }
 }
