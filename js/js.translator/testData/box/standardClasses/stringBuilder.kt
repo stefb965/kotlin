@@ -1,10 +1,13 @@
 package foo
 
 
+inline fun foo(): Char? {
+    return 'K'
+}
+
 fun box(): String {
-    var q = "O"
-    q += 'K'
-    if (q != "OK") return "fail"
+    var q = "O${foo()}"
+    if (q != "OK") return "fail122"
 
     val s = StringBuilder()
     s.append("a")
