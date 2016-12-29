@@ -18,7 +18,6 @@ package org.jetbrains.kotlin.js.translate.intrinsic.functions.factories
 
 import com.google.dart.compiler.backend.js.ast.JsExpression
 import com.google.dart.compiler.backend.js.ast.JsInvocation
-import com.google.dart.compiler.backend.js.ast.JsLiteral
 import org.jetbrains.kotlin.builtins.KotlinBuiltIns
 import org.jetbrains.kotlin.descriptors.ConstructorDescriptor
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor
@@ -47,7 +46,7 @@ object ThrowableConstructorIntrinsicFactory : FunctionIntrinsicFactory {
             }
 
             if (constructor.valueParameters.size == 1 && hasCauseParameter) {
-                argumentsToPass.add(0, JsLiteral.NULL)
+                argumentsToPass.add(0, Namer.getUndefinedExpression())
             }
 
             return JsInvocation(JsAstUtils.pureFqn("newThrowable", Namer.kotlinObject()), argumentsToPass)
