@@ -158,6 +158,11 @@ public final class JsAstUtils {
     }
 
     @NotNull
+    public static JsExpression charToBoxedChar(@NotNull JsExpression expression) {
+        return invokeKotlinFunction("toBoxedChar", expression);
+    }
+
+    @NotNull
     public static JsExpression toShort(@NotNull JsExpression expression) {
         return invokeKotlinFunction(OperatorConventions.SHORT.getIdentifier(), expression);
     }

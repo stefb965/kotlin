@@ -131,7 +131,7 @@ Kotlin.isNumber = function (a) {
 };
 
 Kotlin.isChar = function (value) {
-    return (typeof value) == "number" && (value & 0xFFFF) == value;
+    return value instanceof Kotlin.BoxedChar
 };
 
 Kotlin.isComparable = function (value) {
@@ -165,6 +165,22 @@ Kotlin.toByte = function (a) {
 
 Kotlin.toChar = function (a) {
    return a & 0xFFFF;
+};
+
+Kotlin.toBoxedChar = function (a) {
+    return new Kotlin.BoxedChar(a);
+};
+
+Kotlin.BoxedChar = function (a) {
+    this.value = a;
+};
+
+Kotlin.BoxedChar.prototype.valueOf = function() {
+    return this.value;
+};
+
+Kotlin.BoxedChar.prototype.toString = function() {
+    return String.fromCharCode(this.value);
 };
 
 Kotlin.numberToLong = function (a) {

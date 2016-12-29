@@ -17,7 +17,7 @@
 package kotlin
 
 public class Char(v: Int): Comparable<Char> {
-    val value: Int = v
+    val value: Int = v and 0xFFFF
 
     override fun compareTo(other: Char) = value.compareTo(other.value)
 
@@ -25,5 +25,31 @@ public class Char(v: Int): Comparable<Char> {
 
     override fun hashCode(): Int = value
 
-    override fun toString() = js("String.fromCharCode")(value)
+    override fun toString(): String = js("String.fromCharCode")(value)
+
+    operator fun dec(): Char = Char(value - 1)
+
+    operator fun inc(): Char = Char(value + 1)
+
+    operator fun minus(other: Char): Int = value - other.value
+
+    operator fun minus(other: Int): Char = Char(value - other)
+
+    operator fun plus(other: Int): Char = Char(value + other)
+
+    operator fun rangeTo(other: Char): CharRange = CharRange(this, other)
+
+    fun toByte(): Byte = value.toByte()
+
+    fun toChar(): Char = this
+
+    fun toDouble(): Double = value.toDouble()
+
+    fun toFloat(): Float = value.toFloat()
+
+    fun toInt(): Int = value
+
+    fun toLong(): Long = value.toLong()
+
+    fun toShort(): Short = value.toShort()
 }
