@@ -66,10 +66,9 @@
     };
 
     function isInheritanceFromTrait(metadata, trait) {
-        // TODO: return this optimization
-        /*if (metadata == null || metadata.classIndex < trait.$metadata$.classIndex) {
+        if (metadata == null) {
             return false;
-        }*/
+        }
         var baseClasses = metadata.baseClasses;
         var i;
         for (i = 0; i < baseClasses.length; i++) {

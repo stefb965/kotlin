@@ -15845,6 +15845,12 @@ public class IrBlackBoxCodegenTestGenerated extends AbstractIrBlackBoxCodegenTes
             doTest(fileName);
         }
 
+        @TestMetadata("throwableCause.kt")
+        public void testThrowableCause() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/specialBuiltins/throwableCause.kt");
+            doTest(fileName);
+        }
+
         @TestMetadata("throwableImpl.kt")
         public void testThrowableImpl() throws Exception {
             String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/specialBuiltins/throwableImpl.kt");

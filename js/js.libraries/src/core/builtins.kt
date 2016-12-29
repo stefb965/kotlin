@@ -34,3 +34,21 @@ internal fun arrayIterator(array: dynamic): MutableIterator<dynamic> {
 
 @JsName("PropertyMetadata")
 internal class PropertyMetadata(val name: String)
+
+@JsName("captureStack")
+internal fun captureStack(baseClass: JsClass<in Throwable>, instance: Throwable) {
+    if (js("Error").captureStackTrace) {
+        js("Error").captureStackTrace(instance, instance::class.js);
+    }
+    else {
+        instance.asDynamic().stack = js("new Error()").stack;
+    }
+}
+
+@JsName("newThrowable")
+internal fun newThrowable(message: String?, cause: Throwable?): Throwable {
+    val throwable = js("new Error()")
+    throwable.message = message
+    throwable.cause = cause
+    return throwable
+}
