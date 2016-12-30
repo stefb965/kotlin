@@ -8,6 +8,8 @@ inline fun foo(): Char? {
 fun box(): String {
     if ('O'.toString() + "K" != "OK") return "fail toString"
 
+    if (('O' as Any) != 'O') return "fail eq"
+
 //
 //    if (!' '.isWhitespace()) return "fail white"
 //

@@ -183,6 +183,10 @@ Kotlin.BoxedChar.prototype.toString = function() {
     return String.fromCharCode(this.value);
 };
 
+Kotlin.BoxedChar.prototype.equals = function(o) {
+    return Kotlin.isChar(o) && this.value === o.value;
+};
+
 Kotlin.numberToLong = function (a) {
     return a instanceof Kotlin.Long ? a : Kotlin.Long.fromNumber(a);
 };
