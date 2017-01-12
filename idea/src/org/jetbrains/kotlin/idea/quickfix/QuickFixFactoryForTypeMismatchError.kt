@@ -29,6 +29,7 @@ import org.jetbrains.kotlin.idea.core.quickfix.QuickFixUtil
 import org.jetbrains.kotlin.idea.util.approximateWithResolvableType
 import org.jetbrains.kotlin.idea.util.getResolutionScope
 import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.psi.psiUtil.getParentOfTypeAndBranch
 import org.jetbrains.kotlin.resolve.DescriptorToSourceUtils
 import org.jetbrains.kotlin.resolve.bindingContextUtil.getTargetFunction
 import org.jetbrains.kotlin.resolve.calls.callUtil.getParameterForArgument
@@ -179,6 +180,12 @@ class QuickFixFactoryForTypeMismatchError : KotlinIntentionActionsFactory() {
         if (annotationEntry != null) {
             if (KotlinBuiltIns.isArray(expectedType) && expressionType.isSubtypeOf(expectedType.arguments[0].type) || KotlinBuiltIns.isPrimitiveArray(expectedType)) {
                 actions.add(AddArrayOfTypeFix(diagnosticElement, expectedType))
+            }
+        }
+
+        if (diagnosticElement is KtExpression) {
+            diagnosticElement.getParentOfTypeAndBranch<KtParameter> { defaultValue }?.let {
+                actions.add(ChangeParameterTypeFix(it, expressionType))
             }
         }
 
