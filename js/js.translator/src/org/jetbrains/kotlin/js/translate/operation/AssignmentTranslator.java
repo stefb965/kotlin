@@ -61,8 +61,7 @@ public abstract class AssignmentTranslator extends AbstractTranslator {
         super(context);
         this.expression = expression;
         this.isVariableReassignment = isVariableReassignment(context.bindingContext(), expression);
-        KtExpression left = expression.getLeft();
-        assert left != null : "No left-hand side: " + expression.getText();
+        assert expression.getLeft() != null : "No left-hand side: " + expression.getText();
     }
 
     protected final AccessTranslator createAccessTranslator(KtExpression left, boolean forceOrderOfEvaluation) {

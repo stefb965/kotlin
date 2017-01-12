@@ -1,11 +1,15 @@
 package foo
 
-
-inline fun foo(): Char? {
-    return 'K'
-}
+//
+//inline fun foo(): Char? {
+//    return 'K'
+//}
 
 fun box(): String {
+    val q : Any = 's'
+
+    if (q != 's') return "fail assignment"
+
     if ('O'.toString() + "K" != "OK") return "fail toString"
 
     if (('O' as Any) != 'O') return "fail eq"
