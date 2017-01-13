@@ -140,6 +140,7 @@ Kotlin.isComparable = function (value) {
     return type === "string" ||
            type === "boolean" ||
            Kotlin.isNumber(value) ||
+           Kotlin.isChar(value) ||
            Kotlin.isType(value, Kotlin.kotlin.Comparable);
 };
 
@@ -185,6 +186,10 @@ Kotlin.BoxedChar.prototype.toString = function() {
 
 Kotlin.BoxedChar.prototype.equals = function(o) {
     return Kotlin.isChar(o) && this.value === o.value;
+};
+
+Kotlin.BoxedChar.prototype.hashCode = function() {
+    return this.value;
 };
 
 Kotlin.numberToLong = function (a) {

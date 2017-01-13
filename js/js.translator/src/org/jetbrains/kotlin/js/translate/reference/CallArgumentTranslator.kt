@@ -20,6 +20,7 @@ import com.google.dart.compiler.backend.js.ast.*
 import com.google.dart.compiler.backend.js.ast.metadata.SideEffectKind
 import com.google.dart.compiler.backend.js.ast.metadata.sideEffects
 import com.intellij.util.SmartList
+import org.jetbrains.kotlin.builtins.KotlinBuiltIns
 import org.jetbrains.kotlin.coroutines.isSuspendLambda
 import org.jetbrains.kotlin.descriptors.CallableDescriptor
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor
@@ -211,7 +212,13 @@ class CallArgumentTranslator private constructor(
                 result += LiteralFunctionTranslator(context).translate(lambdaExpression, parameterDescriptor.type)
             }
             else {
-                result += Translation.translateAsExpression(parenthesizedArgumentExpression, context)
+                val parameterType = parameterDescriptor.type
+                val argType = context.bindingContext().getType(parenthesizedArgumentExpression)
+                var arg = Translation.translateAsExpression(parenthesizedArgumentExpression, context)
+                if (argType != null && KotlinBuiltIns.isChar(argType) && !KotlinBuiltIns.isChar(parameterType)) {
+                    arg = JsAstUtils.charToBoxedChar(arg)
+                }
+                result += arg
             }
         }
 
