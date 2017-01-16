@@ -316,7 +316,7 @@ class CompileServiceImpl(
 
     override fun compile(
             sessionId: Int,
-            compilerArguments: Array<String>,
+            compilerArguments: Array<out String>,
             compilationOptions: CompilationOptions,
             servicesFacade: CompilerServicesFacadeBase,
             compilationResults: CompilationResults?
