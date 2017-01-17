@@ -602,6 +602,81 @@ public inline operator fun <K, V> MutableMap<in K, in V>.plusAssign(map: Map<K, 
     putAll(map)
 }
 
+/**
+ * Returns a map containing all entries of the original map except the entry with the given [key].
+ *
+ * The returned map preserves the entry iteration order of the original map.
+ */
+@SinceKotlin("1.1")
+public operator fun <K, V> Map<K, V>.minus(key: K): Map<K, V>
+        = this.toMutableMap().apply { minusAssign(key) }
+
+/**
+ * Returns a map containing all entries of the original map except those entries
+ * which keys are contained in the given [keys] collection.
+ *
+ * The returned map preserves the entry iteration order of the original map.
+ */
+@SinceKotlin("1.1")
+public operator fun <K, V> Map<K, V>.minus(keys: Iterable<K>): Map<K, V>
+        = this.toMutableMap().apply { minusAssign(keys) }
+
+/**
+ * Returns a map containing all entries of the original map except those entries
+ * which keys are contained in the given [keys] array.
+ *
+ * The returned map preserves the entry iteration order of the original map.
+ */
+@SinceKotlin("1.1")
+public operator fun <K, V> Map<K, V>.minus(keys: Array<K>): Map<K, V>
+        = this.toMutableMap().apply { minusAssign(keys) }
+
+/**
+ * Returns a map containing all entries of the original map except those entries
+ * which keys are contained in the given [keys] sequence.
+ *
+ * The returned map preserves the entry iteration order of the original map.
+ */
+@SinceKotlin("1.1")
+public operator fun <K, V> Map<K, V>.minus(keys: Sequence<K>): Map<K, V>
+        = this.toMutableMap().apply { minusAssign(keys) }
+
+/**
+ * Removes the entry with the given [key] from this mutable map.
+ */
+@SinceKotlin("1.1")
+@kotlin.internal.InlineOnly
+public inline operator fun <K, V> MutableMap<K, V>.minusAssign(key: K) {
+    remove(key)
+}
+
+/**
+ * Removes all entries from this mutable map which keys are contained in the given [keys] collection.
+ */
+@SinceKotlin("1.1")
+@kotlin.internal.InlineOnly
+public inline operator fun <K, V> MutableMap<K, V>.minusAssign(keys: Iterable<K>) {
+    this.keys.removeAll(keys)
+}
+
+/**
+ * Removes all entries from this mutable map which keys are contained in the given [keys] array.
+ */
+@SinceKotlin("1.1")
+@kotlin.internal.InlineOnly
+public inline operator fun <K, V> MutableMap<K, V>.minusAssign(keys: Array<K>) {
+    this.keys.removeAll(keys)
+}
+
+/**
+ * Removes all entries from this mutable map which keys are contained in the given [keys] sequence.
+ */
+@SinceKotlin("1.1")
+@kotlin.internal.InlineOnly
+public inline operator fun <K, V> MutableMap<K, V>.minusAssign(keys: Sequence<K>) {
+    this.keys.removeAll(keys)
+}
+
 
 // do not expose for now @PublishedApi
 internal fun <K, V> Map<K, V>.optimizeReadOnlyMap() = when (size) {
