@@ -223,7 +223,6 @@ class CallCompleter(
             }
         }
 
-
         val builder = constraintSystem!!.toBuilder()
         builder.fixVariables()
         val system = builder.build()
