@@ -2244,6 +2244,12 @@ public class DiagnosticsTestGenerated extends AbstractDiagnosticsTest {
                     doTest(fileName);
                 }
 
+                @TestMetadata("genericFunctionsWithNullableTypes.kt")
+                public void testGenericFunctionsWithNullableTypes() throws Exception {
+                    String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/tests/callableReference/generic/genericFunctionsWithNullableTypes.kt");
+                    doTest(fileName);
+                }
+
                 @TestMetadata("kt10968.kt")
                 public void testKt10968() throws Exception {
                     String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/tests/callableReference/generic/kt10968.kt");
@@ -2265,6 +2271,12 @@ public class DiagnosticsTestGenerated extends AbstractDiagnosticsTest {
                 @TestMetadata("kt7470.kt")
                 public void testKt7470() throws Exception {
                     String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/tests/callableReference/generic/kt7470.kt");
+                    doTest(fileName);
+                }
+
+                @TestMetadata("resolutionGenericCallableWithNullableTypes.kt")
+                public void testResolutionGenericCallableWithNullableTypes() throws Exception {
+                    String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/tests/callableReference/generic/resolutionGenericCallableWithNullableTypes.kt");
                     doTest(fileName);
                 }
 

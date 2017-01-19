@@ -2159,6 +2159,24 @@ public class JsCodegenBoxTestGenerated extends AbstractJsCodegenBoxTest {
                 doTest(fileName);
             }
 
+            @TestMetadata("genericCallableReferenceArguments.kt")
+            public void testGenericCallableReferenceArguments() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/callableReference/function/genericCallableReferenceArguments.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("genericCallableReferencesWithNullableTypes.kt")
+            public void testGenericCallableReferencesWithNullableTypes() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/callableReference/function/genericCallableReferencesWithNullableTypes.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("genericCallableReferencesWithOverload.kt")
+            public void testGenericCallableReferencesWithOverload() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/callableReference/function/genericCallableReferencesWithOverload.kt");
+                doTest(fileName);
+            }
+
             @TestMetadata("genericMember.kt")
             public void testGenericMember() throws Exception {
                 String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/callableReference/function/genericMember.kt");
