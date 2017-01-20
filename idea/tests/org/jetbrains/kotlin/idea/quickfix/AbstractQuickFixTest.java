@@ -187,12 +187,8 @@ public abstract class AbstractQuickFixTest extends KotlinLightQuickFixTestCase {
 
     private static void applyAction(String contents, QuickFixTestCase quickFixTestCase, String testName, String testFullPath)
             throws Exception {
-        ActionHint actionHint = ActionHint.parse(quickFixTestCase.getFile(), contents);
-
         String fileName = StringsKt.substringAfterLast(testFullPath, "/", "");
-        String text = actionHint.getExpectedText().replace("${file}", fileName);
-
-        boolean actionShouldBeAvailable = actionHint.shouldPresent();
+        ActionHint actionHint = ActionHint.parse(quickFixTestCase.getFile(), contents.replace("${file}", fileName));
 
         quickFixTestCase.beforeActionStarted(testName, contents);
 
