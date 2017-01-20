@@ -52,6 +52,7 @@ import org.jetbrains.kotlin.resolve.DescriptorUtils;
 import org.jetbrains.kotlin.resolve.calls.callUtil.CallUtilKt;
 import org.jetbrains.kotlin.resolve.calls.model.*;
 import org.jetbrains.kotlin.resolve.descriptorUtil.DescriptorUtilsKt;
+import org.jetbrains.kotlin.resolve.jvm.AsmTypes;
 import org.jetbrains.kotlin.resolve.jvm.diagnostics.JvmDeclarationOrigin;
 import org.jetbrains.kotlin.resolve.jvm.diagnostics.JvmDeclarationOriginKt;
 import org.jetbrains.kotlin.resolve.jvm.jvmSignature.JvmClassSignature;
@@ -1593,12 +1594,16 @@ public class ImplementationBodyCodegen extends ClassBodyCodegen {
         iv.iconst(ordinal);
 
         List<KtSuperTypeListEntry> delegationSpecifiers = enumEntry.getSuperTypeListEntries();
+        ResolvedCall<?> defaultArgumentsConstructorCall = CallUtilKt.getResolvedCall(enumEntry, bindingContext);
         if (delegationSpecifiers.size() == 1 && !enumEntryNeedSubclass(bindingContext, enumEntry)) {
             ResolvedCall<?> resolvedCall = CallUtilKt.getResolvedCallWithAssert(delegationSpecifiers.get(0), bindingContext);
 
             CallableMethod method = typeMapper.mapToCallableMethod((ConstructorDescriptor) resolvedCall.getResultingDescriptor(), false);
 
             codegen.invokeMethodWithArguments(method, resolvedCall, StackValue.none());
+        }
+        else if (defaultArgumentsConstructorCall != null) {
+            codegen.invokeFunction(defaultArgumentsConstructorCall, StackValue.none()).put(Type.VOID_TYPE, iv);
         }
         else {
             iv.invokespecial(implClass.getInternalName(), "<init>", "(Ljava/lang/String;I)V", false);
